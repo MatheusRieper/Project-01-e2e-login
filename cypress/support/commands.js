@@ -26,7 +26,7 @@
 
 Cypress.Commands.add('submeterLogin',(email, senha)=> {
 
-    cy.viewport(1440, 900)  // Dimencionando Resolução de tela
+    cy.viewport(1440, 900)  // Redimencionando Resolução de tela
     cy.visit('https://front.serverest.dev/admin/home') // Entrando no Site
 
     // Preenchendo o formulário de login
