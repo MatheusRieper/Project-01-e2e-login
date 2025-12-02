@@ -23,3 +23,16 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+Cypress.Commands.add('submeterLogin',(email, senha)=> {
+
+    cy.viewport(1440, 900)  // Dimencionando Resolução de tela
+    cy.visit('https://front.serverest.dev/admin/home') // Entrando no Site
+
+    // Preenchendo o formulário de login
+    cy.get('[data-testid="email"]').type(email)
+    cy.get('[data-testid="senha"]').type(senha)
+
+    cy.contains('button', 'Entrar').click()
+
+})
