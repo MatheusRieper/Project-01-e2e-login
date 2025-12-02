@@ -24,10 +24,19 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
-Cypress.Commands.add('submeterLogin',(email, senha)=> {
 
+<<<<<<< HEAD
+=======
+// Criando comando de Iniciar a Pagina
+Cypress.Commands.add('start', () => {
+
+>>>>>>> 0a5fde7 (Refatorado: comandos customizados e organização dos testes de login)
     cy.viewport(1440, 900)  // Redimencionando Resolução de tela
     cy.visit('https://front.serverest.dev/admin/home') // Entrando no Site
+
+})
+// Criando comando de login
+Cypress.Commands.add('submitLoginForm', (email, senha) => {
 
     // Preenchendo o formulário de login
     cy.get('[data-testid="email"]').type(email)
