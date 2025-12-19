@@ -24,24 +24,26 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
+Cypress.Commands.add('openLoginPage', () => {
 
-<<<<<<< HEAD
-=======
-// Criando comando de Iniciar a Pagina
-Cypress.Commands.add('start', () => {
-
->>>>>>> 0a5fde7 (Refatorado: comandos customizados e organização dos testes de login)
-    cy.viewport(1440, 900)  // Redimencionando Resolução de tela
-    cy.visit('https://front.serverest.dev/admin/home') // Entrando no Site
-
+    cy.viewport(1440, 900)
+    cy.visit('https://front.serverest.dev')
 })
-// Criando comando de login
+
 Cypress.Commands.add('submitLoginForm', (email, senha) => {
 
-    // Preenchendo o formulário de login
-    cy.get('[data-testid="email"]').type(email)
-    cy.get('[data-testid="senha"]').type(senha)
+    cy.get('#email')
+        .should('be.visible')
+        .clear()
+        .type(email)
 
-    cy.contains('button', 'Entrar').click()
+    cy.get('#password')
+        .should('be.visible')
+        .clear()
+        .type(senha)
 
+    cy.contains('button', 'Entrar')
+        .should('be.visible')
+        .and('be.enabled')
+        .click()
 })

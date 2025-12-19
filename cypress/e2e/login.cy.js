@@ -1,40 +1,50 @@
-describe('Login', () => {
+describe('Login test', () => {
 
-  // Login com email e senha cadastrado com Sucesso!!
-  it('deve realizar login com sucesso', () => {
-
-    // Chamdando a function Start
-    cy.start()
-    // Chamando função Commands
-    cy.submitLoginForm('matheus@gmail.com', '12345678')
-
-    // Validando que a página home carregou corretamente
-    cy.get('h1').should('be.visible')
+  beforeEach(() => {
+    // Open page
+    cy.openLoginPage()
+    // Home Page Verifiction
+    cy.url().should('include', '/')
   })
 
-  // Email não Cadastrado!!
-  it('Não deve Logar com Email cadastrado', () => {
+  describe('successfull login', () => {
 
-    // Chamdando a function Start
-    cy.start()
-    // Chamando função Commands
-    cy.submitLoginForm('matheu@gmail.com', '12345678')
+    it('Should login with valid credentials', () => {
 
-    // Verificando mensagem de Erro!!!
-    cy.contains('Email e/ou senha inválidos')
-      .should('be.visible')
+      cy.submitLoginForm('test@gmail.com', '12345678')
+
+      cy.url().should('include', '/home')
+
+      cy.get('h1')
+        .should('be.visible')
+        .and('contain.text', 'Serverest Store')
+
+      cy.contains('button', 'Logout')
+        .should('be.visible')
+    })
   })
 
-  // Senha invalida!!
-  it('Não deve Logar com Senha Inválida', () => {
+  describe('Invalid login', () => {
 
-    // Chamdando a function Start
-    cy.start()
-    // Chamando função Commands
-    cy.submitLoginForm('matheus@gmail.com', '1234567')
+    it('Should not login with unregistered email', () => {
 
-    // Verificando mensagem de Erro!!!
-    cy.contains('Email e/ou senha inválidos')
-      .should('be.visible')
+      cy.submitLoginForm('tester@gmail.com', '12345678')
+
+      cy.contains('Email e/ou senha inválidos')
+        .should('be.visible')
+
+      cy.url().should('include', '/login')
+    })
+
+    it('Should not login with invalid password', () => {
+
+      cy.submitLoginForm('test@gmail.com', '1234567')
+
+      cy.contains('Email e/ou senha inválidos')
+        .should('be.visible')
+
+      cy.url().should('include', '/login')
+    })
   })
+
 })
