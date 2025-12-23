@@ -11,7 +11,10 @@ describe('Login test', () => {
 
     it('Should login with valid credentials', () => {
 
-      cy.submitLoginForm('test@gmail.com', '12345678')
+      cy.submitLoginForm(
+        Cypress.env('ADMIN_USER'),
+        Cypress.env('ADMIN_PASS')
+      )
 
       cy.url().should('include', '/home')
 
@@ -28,7 +31,10 @@ describe('Login test', () => {
 
     it('Should not login with unregistered email', () => {
 
-      cy.submitLoginForm('tester@gmail.com', '12345678')
+      cy.submitLoginForm(
+        'tester@gmail.com',
+        Cypress.env('ADMIN_PASS')
+      )
 
       cy.contains('Email e/ou senha inválidos')
         .should('be.visible')
@@ -38,7 +44,9 @@ describe('Login test', () => {
 
     it('Should not login with invalid password', () => {
 
-      cy.submitLoginForm('test@gmail.com', '1234567')
+      cy.submitLoginForm(
+        Cypress.env('ADMIN_USER'),
+        '1234567')
 
       cy.contains('Email e/ou senha inválidos')
         .should('be.visible')
