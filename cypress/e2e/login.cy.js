@@ -27,7 +27,7 @@ describe('Login test', () => {
   })
 
 // ------------- INVALID LOGIN  ------------- 
-const INVALID_USER = 'test'
+const INVALID_USER = 'test@hot.com'
 const INVALID_PASS = 'pass'
 
   describe('Invalid login', () => {
