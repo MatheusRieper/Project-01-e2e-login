@@ -1,12 +1,11 @@
 describe('Login test', () => {
 
   beforeEach(() => {
-    // Open page
     cy.openLoginPage()
-    // Home Page Verifiction
     cy.url().should('include', '/')
   })
 
+// ------------- SUCCESSFULL LOGIN  ------------- 
   describe('successfull login', () => {
 
     it('Should login with valid credentials', () => {
@@ -27,12 +26,16 @@ describe('Login test', () => {
     })
   })
 
+// ------------- INVALID LOGIN  ------------- 
+const INVALID_USER = 'test'
+const INVALID_PASS = 'pass'
+
   describe('Invalid login', () => {
 
     it('Should not login with unregistered email', () => {
 
       cy.submitLoginForm(
-        'tester@gmail.com',
+        INVALID_USER,
         Cypress.env('ADMIN_PASS')
       )
 
@@ -46,7 +49,8 @@ describe('Login test', () => {
 
       cy.submitLoginForm(
         Cypress.env('ADMIN_USER'),
-        '1234567')
+        INVALID_PASS
+      )
 
       cy.contains('Email e/ou senha inválidos')
         .should('be.visible')
