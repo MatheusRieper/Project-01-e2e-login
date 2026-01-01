@@ -8,6 +8,7 @@ module.exports = defineConfig({
   },
 
   env: {
+    ADMIN_NAME: 'test',
     ADMIN_USER: 'test@gmail.com',
     ADMIN_PASS: '12345678'
   }

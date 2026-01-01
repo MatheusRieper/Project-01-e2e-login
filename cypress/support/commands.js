@@ -30,7 +30,7 @@ Cypress.Commands.add('openLoginPage', () => {
     cy.visit('https://front.serverest.dev')
 })
 
-Cypress.Commands.add('submitLoginForm', (email, senha) => {
+Cypress.Commands.add('submitLoginForm', (email, password) => {
 
     cy.get('#email')
         .should('be.visible')
@@ -40,10 +40,40 @@ Cypress.Commands.add('submitLoginForm', (email, senha) => {
     cy.get('#password')
         .should('be.visible')
         .clear()
-        .type(senha)
+        .type(password)
 
     cy.contains('button', 'Entrar')
         .should('be.visible')
         .and('be.enabled')
+        .click()
+})
+
+Cypress.Commands.add('cadastro', (name, email, password) => {
+
+    cy.get('[data-testid="cadastrar"]')
+        .should('be.visible')
+        .click()
+
+    cy.get('[data-testid="nome"]')
+        .should('be.visible')
+        .clear()
+        .type(name)
+
+    cy.get('[data-testid="email"]')
+        .should('be.visible')
+        .clear()
+        .type(email)
+
+    cy.get('[data-testid="password"]')
+        .should('be.visible')
+        .clear()
+        .type(password)
+
+    cy.get('[data-testid="checkbox"]')
+        .check()
+        .should('be.checked')
+
+    cy.get('[type="submit"]')
+        .should('be.enabled')
         .click()
 })
