@@ -32,15 +32,19 @@ Cypress.Commands.add('openLoginPage', () => {
 
 Cypress.Commands.add('submitLoginForm', (email, password) => {
 
-    cy.get('#email')
-        .should('be.visible')
-        .clear()
-        .type(email)
+    if(email){
+        cy.get('#email') .clear() .type(email)
+    }
+    else{
+        cy.get('#email') .clear()
+    }
 
-    cy.get('#password')
-        .should('be.visible')
-        .clear()
-        .type(password)
+    if(password){
+        cy.get('#password') .clear() .type(password) 
+    }
+    else{
+        cy.get('#password') .clear()
+    }
 
     cy.contains('button', 'Entrar')
         .should('be.visible')

@@ -1,14 +1,15 @@
-describe('Login test', () => {
+describe('Login test', function () {
 
-  beforeEach(() => {
+  beforeEach(function () {
     cy.openLoginPage()
     cy.url().should('include', '/')
+    cy.fixture('user').as('user')
   })
 
 // ------------- SUCCESSFULL LOGIN  ------------- 
-  describe.only('successfull login', () => {
+  describe('successfull login', function () {
 
-    it('Should login with valid credentials', () => {
+    it('Should login with valid credentials', function () {
 
       cy.submitLoginForm(
         Cypress.env('ADMIN_USER'),
@@ -20,7 +21,7 @@ describe('Login test', () => {
       cy.get('h1')
         .should('be.visible')
         .and('contain.text', 'Bem Vindo')
-        .and('contain.text', Cypress.env('ADMIN_NAME'))
+        .and('contain.text', this.user.admin.name)
 
       cy.contains('button', 'Logout')
         .should('be.visible')
@@ -28,36 +29,25 @@ describe('Login test', () => {
   })
 
 // ------------- INVALID LOGIN  ------------- 
-const INVALID_USER = 'test@hot.com'
-const INVALID_PASS = 'pass'
+  describe('Invalid login', function () {
 
-  describe('Invalid login', () => {
-
-    it('Should not login with unregistered email', () => {
-
-      cy.submitLoginForm(
-        INVALID_USER,
-        Cypress.env('ADMIN_PASS')
-      )
-
-      cy.contains('Email e/ou senha inválidos')
-        .should('be.visible')
-
-      cy.url().should('include', '/login')
+    beforeEach(function () {
+      cy.fixture('login').as('login')
     })
 
-    it('Should not login with invalid password', () => {
+    it('Should not login with unregistered', function () {
 
-      cy.submitLoginForm(
-        Cypress.env('ADMIN_USER'),
-        INVALID_PASS
-      )
+        this.login.invalid.forEach((data) => {
 
-      cy.contains('Email e/ou senha inválidos')
-        .should('be.visible')
+          cy.submitLoginForm(data.email, data.password)
 
-      cy.url().should('include', '/login')
+          cy.contains(data.message)
+          .should('be.visible')
+
+          cy.reload()
+        })
     })
+
   })
 
 })
