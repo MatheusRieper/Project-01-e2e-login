@@ -47,7 +47,6 @@ describe('Login test', function () {
           cy.reload()
         })
     })
-
   })
 
 })
