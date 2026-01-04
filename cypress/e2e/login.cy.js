@@ -6,7 +6,7 @@ describe('Login test', () => {
   })
 
 // ------------- SUCCESSFULL LOGIN  ------------- 
-  describe('successfull login', () => {
+  describe.only('successfull login', () => {
 
     it('Should login with valid credentials', () => {
 
@@ -19,7 +19,8 @@ describe('Login test', () => {
 
       cy.get('h1')
         .should('be.visible')
-        .and('contain.text', 'Serverest Store')
+        .and('contain.text', 'Bem Vindo')
+        .and('contain.text', Cypress.env('ADMIN_NAME'))
 
       cy.contains('button', 'Logout')
         .should('be.visible')
